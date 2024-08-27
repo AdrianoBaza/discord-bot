@@ -12,7 +12,13 @@ const client = new Client({
 
 client.on('ready', (c) => {
   console.log(`✅${c.user.tag} is online!`)
+})
 
+client.on('interactionCreate', (interaction) => {
+  if(!interaction.isChatInputCommand()) return
+  if(interaction.commandName === 'hey') {
+    interaction.reply('hey!')
+  }
 })
 
 client.login(process.env.DISCORD_BOT_TOKEN);
