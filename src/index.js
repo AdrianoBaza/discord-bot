@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { Client, IntentsBitField } = require('discord.js')
+const { Client, IntentsBitField, EmbedBuilder } = require('discord.js')
 
 const client = new Client({
   intents: [
@@ -16,11 +16,49 @@ client.on('ready', (c) => {
 
 client.on('interactionCreate', (interaction) => {
   if(!interaction.isChatInputCommand()) return
-  if(interaction.commandName === 'add') {
-    const num1 = interaction.options.get('first-number').value
-    const num2 = interaction.options.get('second-number').value
 
-    interaction.reply(`The sum is ${num1 + num2}`)
+  if(interaction.commandName === 'embed') {
+    const embed = new EmbedBuilder()
+      .setTitle('Embed Title')
+      .setDescription('This is an Embed description')
+      .setColor('Random')
+      .addFields(
+        {
+        name: 'Field title',
+        value: 'Some Random Value',
+        inline: true
+        },
+        {
+        name: '2th Field title',
+        value: 'Some Random Value',
+        inline: true
+        },
+    )
+   
+    interaction.reply({embeds: [embed]})
+  }  
+})
+
+client.on('messageCreate', (message) => {
+  if(message.content === 'embed') {
+    const embed = new EmbedBuilder()
+      .setTitle('Embed Title')
+      .setDescription('This is an Embed description message')
+      .setColor('Random')
+      .addFields(
+        {
+        name: 'Field title',
+        value: 'Some Random Value',
+        inline: true
+        },
+        {
+        name: '2th Field title',
+        value: 'Some Random Value',
+        inline: true
+        },
+    )
+
+    message.channel.send({embeds: [embed]})
   }
 })
 
